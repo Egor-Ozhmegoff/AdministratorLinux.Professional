@@ -1,0 +1,4 @@
+servers:
+  hosts:
+    otus:
+      ansible_host: 10.64.244.5
