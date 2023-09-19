@@ -135,5 +135,11 @@
       - name: Show partitions
         shell: fdisk -l {{ raid_device }}
         register: output
-      - name: show output
+      - name: show partitions output
+        debug: msg="{{ output }}"
+# Проверяем смонтированные разделы
+      - name: Show mount
+        shell: df -l
+        register: output
+      - name: show mount output
         debug: msg="{{ output }}"
