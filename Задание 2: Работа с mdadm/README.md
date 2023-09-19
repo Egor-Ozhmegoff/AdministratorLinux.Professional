@@ -25,8 +25,14 @@
 <img width="1440" alt="Снимок экрана 2023-09-19 в 10 42 54" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/69c12fb2-463d-4b87-8e22-9f33c8bbccb4">
 
 ### Создать файловую систему GPT на 5 разделов и смонтировать их на диск
-
-
-
-
-  
+Запускаем плейбук create_gpt.yaml который выполнит следующие задачи:
+- Создаст разделы
+- Создаст файловую систему для разделов
+- Содаст каталоги для разделов
+- Смонтирует разделы
+- Выведет результат
+<img width="1438" alt="Снимок экрана 2023-09-19 в 12 08 45" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/400fd0c8-c12f-4696-8de6-1f90f86807db">
+В таске Show partitions мы видим что разделы созданы
+<img width="1440" alt="Снимок экрана 2023-09-19 в 12 08 56" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/40c92808-1310-4608-8748-f63f2447b901">
+В таске Show mount мы видим что разделы смонтированы
+<img width="1440" alt="Снимок экрана 2023-09-19 в 12 09 06" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/e9cc2826-aff3-458e-8727-abb9d34add35">
