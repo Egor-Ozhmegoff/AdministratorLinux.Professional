@@ -1,6 +1,6 @@
 ### Задание 2: Работа с mdadm
 
 Запускаем плейбук create_raid которая нам создаст рейд 
-![Снимок экрана 2023-09-19 в 10.05.18.png](..%2F..%2F..%2FDesktop%2F%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202023-09-19%20%D0%B2%2010.05.18.png)
+<img width="1440" alt="Снимок экрана 2023-09-19 в 10 05 18" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/d468989e-f944-40f3-9dfb-9ffbbeed796a">
 В таске Show output мы видим что рейд успешно собрался
-![Снимок экрана 2023-09-19 в 10.05.08.png](..%2F..%2F..%2FDesktop%2F%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202023-09-19%20%D0%B2%2010.05.08.png)
+<img width="1440" alt="Снимок экрана 2023-09-19 в 10 05 08" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/a07bcd75-576e-4544-bdda-8a847fab4018">
