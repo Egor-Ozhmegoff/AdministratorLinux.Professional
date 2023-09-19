@@ -7,6 +7,6 @@
 
 Перезагружаем систему sudo reboot 
 
-Проверяем новую версию ядра
+Проверяем новую версию ядра после перезагрузки
 
 <img width="235" alt="Снимок экрана 2023-09-17 в 15 29 07" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/6cecd043-28e1-4e47-880b-d5e8c5c94188">
