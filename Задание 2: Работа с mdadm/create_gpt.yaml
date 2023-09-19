@@ -131,3 +131,9 @@
           src: /dev/md/raid1p5
           state: mounted
           fstype: ext4
+# Проверяем созданные разделы
+      - name: Show partitions
+        shell: fdisk -l /dev/md/raid1
+        register: output
+      - name: show output
+        debug: msg="{{ output }}"
