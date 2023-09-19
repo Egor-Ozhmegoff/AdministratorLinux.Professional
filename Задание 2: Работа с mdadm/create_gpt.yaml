@@ -133,7 +133,7 @@
           fstype: ext4
 # Проверяем созданные разделы
       - name: Show partitions
-        shell: fdisk -l /dev/md/raid1
+        shell: fdisk -l {{ raid_device }}
         register: output
       - name: show output
         debug: msg="{{ output }}"
