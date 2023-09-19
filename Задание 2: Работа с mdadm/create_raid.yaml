@@ -1,0 +1,28 @@
+---
+  - name: mdadm
+    gather_facts: false
+    hosts: all
+    become: true
+    become_method: sudo
+    vars:
+      raid_device: /dev/md/raid1
+    tasks:
+# Нулим суперблоки
+    - name: Zerorize disk
+      shell: mdadm --zero-superblock --force /dev/sdb /dev/sdc
+# Создаем рейд
+    - name: Create raid
+      shell: yes | mdadm --create {{ raid_device }} -l 1 -n 2 /dev/sdb /dev/sdc
+# Ждем пока рейд соберется
+    - name: Pause for 2 minutes
+      pause:
+        minutes: 4
+# Проверяем статус рейда
+    - name: Check raid status
+      shell: cat /proc/mdstat
+      register: output
+    - name: Show output
+      debug: msg="{{ output }}"
+# Cоздаем файловую систему в рейде
+    - name: Create file system
+      shell: mkfs.ext4 {{ raid_device }}
