@@ -1,0 +1,35 @@
+---
+  - name: mdadm
+    gather_facts: false
+    hosts: all
+    become: true
+    become_method: sudo
+    vars:
+      disk: /dev/sdb
+      raid_device: /dev/md/raid1
+    tasks:
+# ломаем 1 диск в рейде
+      - name: Break sdb disk
+        shell: mdadm {{ raid_device }} --fail {{ disk }}
+# Проверяем статус рейда
+      - name: Show raid status 1
+        shell: cat /proc/mdstat && mdadm -D {{ raid_device }}
+        register: output
+      - name: Show output 1
+        debug: msg="{{ output }}"
+# Удаляем сломаный диск
+      - name: Delete sdb disk
+        shell: mdadm {{ raid_device }} --remove {{ disk }}
+# Добавляем новый диск в рейд
+      - name: Add new disk to raid
+        shell: mdadm {{ raid_device }} --add {{ disk }}
+# Ждем пока рейд пересоберется
+      - name: Pause for 4 minutes
+        pause:
+          minutes: 4
+# Проверяем статус рейда
+      - name: Show raid status 2
+        shell: cat /proc/mdstat && mdadm -D {{ raid_device }}
+        register: output
+      - name: Show output 2
+        debug: msg="{{ output }}"

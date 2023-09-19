@@ -14,7 +14,7 @@
     - name: Create raid
       shell: yes | mdadm --create {{ raid_device }} -l 1 -n 2 /dev/sdb /dev/sdc
 # Ждем пока рейд соберется
-    - name: Pause for 2 minutes
+    - name: Pause for 4 minutes
       pause:
         minutes: 4
 # Проверяем статус рейда
