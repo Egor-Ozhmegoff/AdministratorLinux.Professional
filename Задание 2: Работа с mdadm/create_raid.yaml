@@ -1,5 +1,5 @@
 ---
-  - name: mdadm
+  - name: create_raid
     gather_facts: false
     hosts: all
     become: true
@@ -23,6 +23,3 @@
       register: output
     - name: Show output
       debug: msg="{{ output }}"
-# Cоздаем файловую систему в рейде
-    - name: Create file system
-      shell: mkfs.ext4 {{ raid_device }}

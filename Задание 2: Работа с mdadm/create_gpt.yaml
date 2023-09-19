@@ -1,0 +1,133 @@
+---
+  - name: create_gpt
+    gather_facts: false
+    hosts: all
+    become: true
+    become_method: sudo
+    vars:
+      raid_device: /dev/md/raid1
+    tasks:
+# Создаем 5 разделов
+      - name: Create partition 1
+        parted:
+          number: 1
+          device: "{{ raid_device }}"
+          state: present
+          fs_type: ext4
+          label: "gpt"
+          part_type: primary
+          part_start: 0%
+          part_end: 20%
+      - name: Create partition 2
+        parted:
+          number: 2
+          device: "{{ raid_device }}"
+          state: present
+          fs_type: ext4
+          label: "gpt"
+          part_type: primary
+          part_start: 20%
+          part_end: 40%
+      - name: Create partition 3
+        parted:
+          number: 3
+          device: "{{ raid_device }}"
+          state: present
+          fs_type: ext4
+          label: "gpt"
+          part_type: primary
+          part_start: 40%
+          part_end: 60%
+      - name: Create partition 4
+        parted:
+          number: 4
+          device: "{{ raid_device }}"
+          state: present
+          fs_type: ext4
+          label: "gpt"
+          part_type: primary
+          part_start: 60%
+          part_end: 80%
+      - name: Create partition 5
+        parted:
+          number: 5
+          device: "{{ raid_device }}"
+          state: present
+          fs_type: ext4
+          label: "gpt"
+          part_type: primary
+          part_start: 80%
+          part_end: 100%
+# Создаем файловую систему на RAID
+      - name: Create fs on part 1
+        filesystem:
+          fstype: ext4
+          dev: "{{ raid_device }}p1"
+      - name: Create fs on part 2
+        filesystem:
+          fstype: ext4
+          dev: "{{ raid_device }}p2"
+      - name: Create fs on part 3
+        filesystem:
+          fstype: ext4
+          dev: "{{ raid_device }}p3"
+      - name: Create fs on part 4
+        filesystem:
+          fstype: ext4
+          dev: "{{ raid_device }}p4"
+      - name: Create fs on part 5
+        filesystem:
+          fstype: ext4
+          dev: "{{ raid_device }}p5"
+# Создаем каталоги для раделов
+      - name: Create dir part 1
+        file:
+          path: /raid/part1
+          state: directory
+      - name: Create dir part 2
+        file:
+          path: /raid/part2
+          state: directory
+      - name: Create dir part 3
+        file:
+          path: /raid/part3
+          state: directory
+      - name: Create dir part 4
+        file:
+          path: /raid/part4
+          state: directory
+      - name: Create dir part 5
+        file:
+          path: /raid/part5
+          state: directory
+# Смонтируем разделы
+      - name: Mount part 1
+        mount:
+          path: /raid/part1
+          src: /dev/md/raid1p1
+          state: mounted
+          fstype: ext4
+      - name: Mount part 2
+        mount:
+          path: /raid/part2
+          src: /dev/md/raid1p2
+          state: mounted
+          fstype: ext4
+      - name: Mount part 3
+        mount:
+          path: /raid/part3
+          src: /dev/md/raid1p3
+          state: mounted
+          fstype: ext4
+      - name: Mount part 4
+        mount:
+          path: /raid/part4
+          src: /dev/md/raid1p4
+          state: mounted
+          fstype: ext4
+      - name: Mount part 5
+        mount:
+          path: /raid/part5
+          src: /dev/md/raid1p5
+          state: mounted
+          fstype: ext4

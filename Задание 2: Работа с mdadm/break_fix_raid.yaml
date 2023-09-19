@@ -1,5 +1,5 @@
 ---
-  - name: mdadm
+  - name: break_fir_raid
     gather_facts: false
     hosts: all
     become: true
