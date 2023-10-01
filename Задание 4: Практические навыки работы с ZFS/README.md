@@ -38,8 +38,3 @@
 - Отобразит секретное сообщение
 
 <img width="664" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/3da2a74f-eae0-4abc-ab5a-6392d38150c2">
-
-- 
-
-
-
