@@ -12,40 +12,48 @@
       - /dev/sdh /dev/sdi
       compression: [ "lzjb", "lz4", "gzip", "zle" ]
     tasks:
+    # Устанавливаем zfs
       - name: install zfs
         apt:
           name: zfsutils-linux
           state: present
+    # Создаем zfs зеркала
       - name: create zfs
         shell: zpool create otus{{ id + 1 }} mirror {{ item }}
         loop: "{{ disks }}"
         loop_control:
           index_var: id
+    # Проверяем зеркала
       - name: zpool list
         shell: zpool list
         register: output
       - name: show zpool list
         debug: msg={{ output.stdout_lines }}
+    # Настраиваем сжатие
       - name: add compression to zfs
         shell: zfs set compression={{ item }} otus{{ id + 1 }}
         loop: "{{ compression }}"
         loop_control:
           index_var: id
+    # Проверяем настройки сжатия
       - name: check compression
         shell: zfs get all | grep compression
         register: output
       - name: show compression
         debug: msg={{ output.stdout_lines }}
+    # Скачиваем файл
       - name: download file
         shell: wget -P /otus{{ id + 1 }} https://gutenberg.org/cache/epub/2600/pg2600.converter.log
         with_sequence: start=1 end=4
         loop_control:
           index_var: id
+    # Проверяем что фал загрузился
       - name: check file
         shell: ls -l /otus*
         register: output
       - name: show file
         debug: msg={{ output.stdout_lines }}
+    # Смотрим показатели сжатия
       - name: check compression
         shell: zfs list && zfs get all | grep compressratio | grep -v ref
         register: output

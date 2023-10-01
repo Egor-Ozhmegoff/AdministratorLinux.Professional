@@ -1,5 +1,5 @@
 ---
-  - name: decrease lvm size
+  - name: create home for snapshot
     gather_facts: false
     hosts: all
     become: true

@@ -1,0 +1,19 @@
+---
+  - name: zpool shanpshot
+    gather_facts: false
+    hosts: all
+    become: true
+    become_method: sudo
+    tasks:
+      - name: download file
+        shell: wget -O otus_task2.file --no-check-certificate "https://drive.google.com/u/0/uc?id=1gH8gCL9y7Nd5Ti3IRmplZPF1XjzxeRAG&export=download"
+      - name: restore filesystem
+        shell: zfs receive otus/test@today < otus_task2.file
+      - name: find secret message
+        shell: find /otus/test -name "secret_message"
+        register: output
+      - name: get secret message
+        shell: cat {{ output.stdout_lines[0] }}
+        register: output
+      - name: show secret message
+        debug: msg={{ output.stdout_lines }}

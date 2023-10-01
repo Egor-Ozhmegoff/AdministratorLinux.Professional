@@ -1,0 +1,28 @@
+---
+  - name: create zfs
+    gather_facts: false
+    hosts: all
+    become: true
+    become_method: sudo
+    tasks:
+      - name: download archive
+        shell: wget -O archive.tar.gz --no-check-certificate 'https://drive.google.com/u/0/uc?id=1KRBNW33QWqbvbVHa3hLJivOAt60yukkg&export=download'
+      - name: unpack archive
+        shell: tar -xzvf archive.tar.gz
+      - name: check import opportunity
+        shell: zpool import -d zpoolexport/
+        register: output
+      - name: show opportunity
+        debug: msg={{ output.stdout_lines }}
+      - name: import pool
+        shell: zpool import -d zpoolexport/ otus
+      - name: check import
+        shell: zpool status
+        register: output
+      - name: show pool status
+        debug: msg={{ output.stdout_lines }}
+      - name: check settings
+        shell: zfs get all otus
+        register: output
+      - name: show settings
+        debug: msg={{ output.stdout_lines }}
