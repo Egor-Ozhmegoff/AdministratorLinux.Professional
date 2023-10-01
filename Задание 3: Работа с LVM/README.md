@@ -48,3 +48,8 @@
 - Удалит данные
 - Восстановит данные из снепшота
 - Проверит что данные восстановились
+
+<img width="574" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/b7dbf7f9-bc00-40f9-9968-8b1bd9a52586">
+
+<img width="600" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/3d1cdb08-b190-411c-a194-aea77982747a">
+
