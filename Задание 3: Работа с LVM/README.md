@@ -53,3 +53,6 @@
 
 <img width="600" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/3d1cdb08-b190-411c-a194-aea77982747a">
 
+<img width="582" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/b5bfe0ea-0ec1-4ac9-82ee-ad85cbeeb0ae">
+
+<img width="567" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/e1de83a8-5b69-4c34-93d1-68f6eae6e1f6">
