@@ -32,6 +32,8 @@
 - Настроит автоматическое монтирование при загрузке системы
 - Перезагрузит систему
 
+<img width="574" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/0007e7a5-b965-4765-837b-ba51832092b3">
+
 ### 3) Выделить том под /home и сделать снепшот
 
 Запускаем плейбук create_home_for_snapshots который:
