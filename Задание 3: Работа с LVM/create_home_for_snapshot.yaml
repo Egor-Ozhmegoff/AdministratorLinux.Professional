@@ -37,25 +37,24 @@
         shell: mount /dev/ubuntu-vg/LogVol_Home /mnt
       # Копируем данные и Монтируем lvm в home
       - name: move files to new volume
-        shell: >-
-          cp -aR /home/* /mnt/ && rm -rf /home/* && umount /mnt && mount /dev/ubuntu-vg/LogVol_Home /home/
+        shell: cp -aR /home/* /mnt/ && umount /mnt
+      - name: chenge home dir
+        shell: rm -rf /home/* && mount /dev/ubuntu-vg/LogVol_Home /home
       # Настраиваем автомонтирование
       - name: change fstab
         shell: >-
           chroot /mnt echo "`blkid | grep Home | awk '{ print $2 }'` /home ext4 defaults 0 0" >> /etc/fstab
       # Создаем данные в /home
       - name: create files in /home
-        shell: touch /home/file{1..20}
+        shell: touch /home/file{{ item }}
+        with_sequence: start=1 end=20
       # Создаем снепшот
       - name: create snapshot
-        lvol:
-          vg: ubuntu-vg
-          lv: LogVol_Home
-          snapshot: home_snap
-          size: 100M
+        shell: lvcreate -L 100MB -s -n home_snap /dev/ubuntu-vg/LogVol_Home
       # Удаляем данные
       - name: delete files
-        shell: rm -f /home/file{11..20}
+        shell: rm -f /home/file{{ item }}
+        with_sequence: start=1 end=20
       # Восстанавливаем данные из снепшота
       - name: restore files
         shell: umount /home && lvconvert --merge /dev/ubuntu-vg/home_snap && mount /home
@@ -64,4 +63,4 @@
         shell: ls -ls /home
         register: output
       - name: show output
-        debug: msg={{ output }}
+        debug: msg={{ output.stdout_lines }}
