@@ -1,0 +1,53 @@
+---
+  - name: create zfs
+    gather_facts: false
+    hosts: all
+    become: true
+    become_method: sudo
+    vars:
+      disks:
+      - /dev/sdb /dev/sdc
+      - /dev/sdd /dev/sde
+      - /dev/sdf /dev/sdg
+      - /dev/sdh /dev/sdi
+      compression: [ "lzjb", "lz4", "gzip", "zle" ]
+    tasks:
+      - name: install zfs
+        apt:
+          name: zfsutils-linux
+          state: present
+      - name: create zfs
+        shell: zpool create otus{{ id + 1 }} mirror {{ item }}
+        loop: "{{ disks }}"
+        loop_control:
+          index_var: id
+      - name: zpool list
+        shell: zpool list
+        register: output
+      - name: show zpool list
+        debug: msg={{ output.stdout_lines }}
+      - name: add compression to zfs
+        shell: zfs set compression={{ item }} otus{{ id + 1 }}
+        loop: "{{ compression }}"
+        loop_control:
+          index_var: id
+      - name: check compression
+        shell: zfs get all | grep compression
+        register: output
+      - name: show compression
+        debug: msg={{ output.stdout_lines }}
+      - name: download file
+        shell: wget -P /otus{{ id + 1 }} https://gutenberg.org/cache/epub/2600/pg2600.converter.log
+        with_sequence: start=1 end=4
+        loop_control:
+          index_var: id
+      - name: check file
+        shell: ls -l /otus*
+        register: output
+      - name: show file
+        debug: msg={{ output.stdout_lines }}
+      - name: check compression
+        shell: zfs list && zfs get all | grep compressratio | grep -v ref
+        register: output
+      - name: show compression
+        debug: msg={{ output.stdout_lines }}
