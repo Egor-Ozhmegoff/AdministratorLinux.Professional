@@ -4,6 +4,7 @@
     hosts: all
     become: true
     become_method: sudo
+    remote_user: root
     tasks:
     # Удаляем старый lvm
       - name: delete LV
@@ -37,9 +38,10 @@
         shell: mount /dev/ubuntu-vg/LogVol_Home /mnt
       # Копируем данные и Монтируем lvm в home
       - name: move files to new volume
-        shell: cp -aR /home/* /mnt/ && umount /mnt
-      - name: chenge home dir
-        shell: rm -rf /home/* && mount /dev/ubuntu-vg/LogVol_Home /home
+        shell: >-
+          cp -aR /home/* /mnt/ && rm -rf /home/*
+      - name:  remove home and mount
+        shell: umount /mnt && mount /dev/ubuntu-vg/LogVol_Home /home/
       # Настраиваем автомонтирование
       - name: change fstab
         shell: >-
@@ -50,17 +52,21 @@
         with_sequence: start=1 end=20
       # Создаем снепшот
       - name: create snapshot
-        shell: lvcreate -L 100MB -s -n home_snap /dev/ubuntu-vg/LogVol_Home
+        lvol:
+          vg: ubuntu-vg
+          lv: LogVol_Home
+          snapshot: home_snap
+          size: 100M
       # Удаляем данные
       - name: delete files
         shell: rm -f /home/file{{ item }}
         with_sequence: start=1 end=20
       # Восстанавливаем данные из снепшота
       - name: restore files
-        shell: umount /home && lvconvert --merge /dev/ubuntu-vg/home_snap && mount /home
+        shell: umount -l /home && lvconvert --merge /dev/ubuntu-vg/home_snap && mount /home
       # Проверяем что данные восстановились
       - name: Check data
         shell: ls -ls /home
         register: output
       - name: show output
-        debug: msg={{ output.stdout_lines }}
+        debug: msg={{ output }}
