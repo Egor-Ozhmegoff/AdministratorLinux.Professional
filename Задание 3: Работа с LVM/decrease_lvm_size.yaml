@@ -1,0 +1,62 @@
+---
+  - name: decrease lvm size
+    gather_facts: false
+    hosts: all
+    become: true
+    become_method: sudo
+    vars:
+      main_dir: ["/proc/", "/sys/", "/dev/", "/run/", "/boot/"]
+    tasks:
+    # Проверяем с какого lvm загрузилась система
+      - name: register lsblk
+        shell: lsblk
+        register: output
+      - name: check system
+        debug: msg={{ output }}
+    # Удаляем старый lvm
+      - name: Remove the logical volume.
+        lvol:
+          vg: ubuntu-vg
+          lv: ubuntu-lv
+          state: absent
+          force: true
+    # Создаем новый lvm размером 8G
+      - name: Create lv 8G
+        lvol:
+          vg: ubuntu-vg
+          lv: ubuntu-lv
+          size: 8G
+    # Создаем файловую систему
+      - name: Create filesystem
+        filesystem:
+          fstype: ext4
+          dev: /dev/ubuntu-vg/ubuntu-lv
+    # Отмонтируем временный lvm от /mnt
+      - name: Unmount temporary volume
+        mount:
+          path: /mnt
+          src: /dev/vg_root/lv_root
+          fstype: ext4
+          state: unmounted
+    # Смонтируем уменьшенный lvm
+      - name: Mount LV to /mnt
+        mount:
+          path: /mnt
+          src: /dev/ubuntu-vg/ubuntu-lv
+          fstype: ext4
+          state: mounted
+    # Копируем данные на lvm
+      - name: Copy data from / to /mnt
+        shell: sudo cp -rxa / /mnt/
+      - name: Mount main directories
+        shell: mount --bind {{ item }} /mnt{{ item }}
+        loop: "{{ main_dir }}"
+    # Обновляем загрузчик
+      - name: Grub update
+        shell: chroot /mnt/ grub-mkconfig -o /boot/grub/grub.cfg
+      - name: check initrd
+        shell: cd /mnt/boot && ls initrd.img*
+        register: output
+    # Настраиваем загрузку с уменьшенного lvm
+      - name: Update initrd
+        shell: update-initramfs -u -b /mnt/boot

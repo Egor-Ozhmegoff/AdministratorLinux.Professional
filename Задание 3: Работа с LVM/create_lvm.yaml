@@ -1,0 +1,49 @@
+---
+  - name: create lvm
+    gather_facts: false
+    hosts: all
+    become: true
+    become_method: sudo
+    vars:
+      main_dir: ["/proc/", "/sys/", "/dev/", "/run/", "/boot/"]
+    tasks:
+    # Создаем новый lvm
+      - name: Create VG
+        lvg:
+          vg: vg_root
+          pvs: /dev/sdb
+      - name: Create LV
+        lvol:
+          vg: vg_root
+          lv: lv_root
+          size: 100%FREE
+    # Создаем файловую систему ext4
+      - name: Create filesystem
+        filesystem:
+          fstype: ext4
+          dev: /dev/vg_root/lv_root
+    # Млнтируем lvm в каталог /mnt
+      - name: Mount LV to /mnt
+        mount:
+          path: /mnt
+          src: /dev/vg_root/lv_root
+          fstype: ext4
+          state: mounted
+    # Копируем данные из старого lvm
+      - name: Copy data from / to /mnt
+        shell: sudo cp -rxa / /mnt/
+    # Монтируем каталоги
+      - name: Mount main directories
+        shell: mount --bind {{ item }} /mnt{{ item }}
+        loop: "{{ main_dir }}"
+    # Обновляем загрузчик
+      - name: Grub update
+        shell: chroot /mnt/ grub-mkconfig -o /boot/grub/grub.cfg
+      - name: check initrd
+        shell: cd /mnt/boot && ls initrd.img*
+        register: output
+    # Настраиваем загрузку с нового lvm
+      - name: Update initrd
+        shell: update-initramfs -u -b /mnt/boot
+      - name: reboot system
+        reboot:

@@ -1,0 +1,67 @@
+---
+  - name: decrease lvm size
+    gather_facts: false
+    hosts: all
+    become: true
+    become_method: sudo
+    tasks:
+    # Удаляем старый lvm
+      - name: delete LV
+        lvol:
+          vg: vg_root
+          lv: lv_root
+          state: absent
+          force: true
+      - name: delete vg
+        lvg:
+          vg: vg_root
+          pvs: /dev/sdb
+          state: absent
+          force: true
+      # Проверяем что система переехала на уменьшенный том и что /var смонтировалсяв зеркало
+      - name: register lsblk
+        shell: lsblk
+        register: output
+      - name: check system
+        debug: msg={{ output }}
+      # Создаем lvm для /home
+      - name: create /home volume
+        shell: lvcreate -L 2G -n LogVol_Home /dev/ubuntu-vg
+      # Создаем файловую систему
+      - name: Create filesystem
+        filesystem:
+          fstype: ext4
+          dev: /dev/ubuntu-vg/LogVol_Home
+      # Монтируем каталог
+      - name: Mount new lv
+        shell: mount /dev/ubuntu-vg/LogVol_Home /mnt
+      # Копируем данные и Монтируем lvm в home
+      - name: move files to new volume
+        shell: >-
+          cp -aR /home/* /mnt/ && rm -rf /home/* && umount /mnt && mount /dev/ubuntu-vg/LogVol_Home /home/
+      # Настраиваем автомонтирование
+      - name: change fstab
+        shell: >-
+          chroot /mnt echo "`blkid | grep Home | awk '{ print $2 }'` /home ext4 defaults 0 0" >> /etc/fstab
+      # Создаем данные в /home
+      - name: create files in /home
+        shell: touch /home/file{1..20}
+      # Создаем снепшот
+      - name: create snapshot
+        lvol:
+          vg: ubuntu-vg
+          lv: LogVol_Home
+          snapshot: home_snap
+          size: 100M
+      # Удаляем данные
+      - name: delete files
+        shell: rm -f /home/file{11..20}
+      # Восстанавливаем данные из снепшота
+      - name: restore files
+        shell: umount /home && lvconvert --merge /dev/ubuntu-vg/home_snap && mount /home
+      # Проверяем что данные восстановились
+      - name: Check data
+        shell: ls -ls /home
+        register: output
+      - name: show output
+        debug: msg={{ output }}

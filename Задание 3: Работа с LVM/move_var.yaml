@@ -1,0 +1,37 @@
+---
+  - name: move var directory
+    gather_facts: false
+    hosts: all
+    become: true
+    become_method: sudo
+    tasks:
+    # Создаем vg для /var
+    - name: Create VG
+      lvg:
+        vg: vg_var
+        pvs: /dev/sdc,/dev/sdd
+    # Создаем зеркало
+    - name: Create LV
+      shell: lvcreate -L 950M -m1 -n lv_var vg_var
+    # Создаем файловую систему
+    - name: Create filesystem
+      filesystem:
+        fstype: ext4
+        dev: /dev/vg_var/lv_var
+    # Монтируем зеркало
+    - name: Mount main directories
+      shell: mount /dev/vg_var/lv_var /mnt
+    # Переносим данные на зеркало
+    - name: Copy var to new folder
+      shell: cp -aR /var/* /mnt/
+    - name: rsync new folder
+      shell: rsync -avHPSAX /var/ /mnt/
+    # Перемонтируем том в /var
+    - name: mount var
+      shell: umount /mnt && mount /dev/vg_var/lv_var /var
+    # Настраиваем автоматическое монтирование при загрузке системы
+    - name: change fstab
+      shell: >-
+       chroot /mnt echo "`blkid | grep var: | awk '{ print $2 }'` /var ext4 defaults 0 0" >> /etc/fstab
+    - name: reboot system
+      reboot:
