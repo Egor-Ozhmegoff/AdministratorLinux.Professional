@@ -8,6 +8,8 @@
 - Настроит загрузку с резервного lvm lv_root
 - Перезагрузит систему
 
+<img width="644" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/40fc90b6-6054-46a4-a181-62abcb92adce">
+
 Далее запускаем плейбук decrease_lvm_size в котором будут следующие задачи:
 - Проверить что система загрузилась с нужного lvm
 - Удалить старый lvm ubuntu-lv
@@ -15,6 +17,10 @@
 - Создать на новом lvm ubuntu-lv файловую систему 
 - Перенести на ubuntu-lv данные с резервного lvm lv_root
 - Настроить загрузку системы на lvm ubuntu-lv
+
+<img width="688" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/44b4d412-dc3e-494f-b9b2-b27a26d4c5b7">
+
+<img width="576" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/6bd139c4-1aef-4640-8fcc-9a0748ca8985">
 
 ### 2) Выделить том /var под зеркало
 
@@ -26,4 +32,4 @@
 - Настроит автоматическое монтирование при загрузке системы
 - Перезагрузит систему
 
-### 3)
+### 3) 
