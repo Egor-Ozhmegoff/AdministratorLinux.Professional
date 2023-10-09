@@ -48,23 +48,30 @@
 ##### Проверяем сервер: 
 - перезагружаем сервер 
 - заходим на сервер 
-- проверяем наличие файлов в каталоге `/srv/share/upload/` - проверяем статус сервера NFS `systemctl status nfs` - проверяем статус firewall `systemctl status firewalld` - проверяем экспорты `exportfs -s` 
+- проверяем наличие файлов в каталоге `/srv/share/upload/`
+- проверяем статус сервера NFS `systemctl status nfs-server`
+- проверяем статус firewall `systemctl status ufw`
+- проверяем экспорты `exportfs -s` 
 - проверяем работу RPC `showmount -a 10.64.244.6`
 
 <img width="500" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/79c7ed79-b2ee-4ae9-a369-eabc9d6c2533">
 <img width="500" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/2607231c-5d4a-41b1-b403-0442269df6dd">
-
-
+<img width="1440" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/54477156-dcb8-42d0-93ba-655cd0b12f07">
 
 ##### Проверяем клиент: 
 - возвращаемся на клиент 
 - перезагружаем клиент 
 - заходим на клиент 
-- проверяем работу RPC `showmount -a 192.168.50.10` - заходим в каталог `/mnt/upload` 
+- проверяем работу RPC `showmount -a 10.64.244.5`
+- заходим в каталог `/mnt/upload` 
 - проверяем статус монтирования `mount | grep mnt` 
 - проверяем наличие ранее созданных файлов 
 - создаём тестовый файл `touch final_check` 
 - проверяем, что файл успешно создан 
+
+<img width="396" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/7efdfeda-d80f-4a53-8d7f-03b0d0c6b47d">
+<img width="1438" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/8cfd3641-28c2-4009-927a-6a48264de218">
+
 
 
 
