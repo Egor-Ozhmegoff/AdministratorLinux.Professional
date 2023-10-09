@@ -20,5 +20,5 @@
 - Настроит автомонтирование сетевой папки
 - Проверит монтирование
 
-  Запускаем плейбуку и видим что сетевая папка подключена и работает
-  <img width="1440" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/a12a5371-751d-450b-8daa-b09414789814">
+Запускаем плейбуку и видим что сетевая папка подключена и работает
+<img width="1440" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/a12a5371-751d-450b-8daa-b09414789814">
