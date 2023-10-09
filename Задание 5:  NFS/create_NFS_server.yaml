@@ -1,7 +1,7 @@
 ---
   - name: create NFS
     gather_facts: false
-    hosts: all
+    hosts: otus
     become: true
     become_method: sudo
     tasks:
@@ -13,9 +13,9 @@
         ufw:
           state: enabled
       - name: permit tcp nfs
-        shell: ufw allow 22,2049,111,20048/tcp
+        shell: ufw allow 22,2049,111,20048,49152:65535/tcp
       - name: permit udp nfs
-        shell: ufw allow 2049,111,20048/tcp
+        shell: ufw allow 2049,111,20048,33313/udp
       - name: dir for nfs
         file:
           path: /srv/share/upload
@@ -24,11 +24,15 @@
           group: nogroup
           mode: 0777
       - name: create structure
-        shell: echo '/srv/share *(rw,sync,root_squash)' >> /etc/exports
+        shell: echo '/srv/share 10.64.244.6/32(rw,sync,root_squash)' >> /etc/exports
       - name: enable exports
         shell: exportfs -r
       - name: check exports
         shell: exportfs -s
         register: output
+      - name: restart nsf-server
+        systemd:
+          name: remote-fs.target
+          state: restarted
       - name: show exports
         debug: msg={{ output.stdout_lines }}

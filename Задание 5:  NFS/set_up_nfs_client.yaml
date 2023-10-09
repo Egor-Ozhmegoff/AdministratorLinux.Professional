@@ -1,7 +1,7 @@
 ---
   - name: create NFS
     gather_facts: false
-    hosts: all
+    hosts: otus2
     become: true
     become_method: sudo
     tasks:
@@ -16,4 +16,16 @@
           port: 22
           proto: tcp
       - name: fstab
-        shell: echo "10.64.244.5:/srv/share/ /mnt nfs vers=3,proto=udp,noauto,x-systemd.automount 0 0" >> /etc/fstab
+        shell: echo "10.64.244.5:/srv/share/ /mnt nfs nfsvers=3,noauto,x-systemd.automount 0 0" >> /etc/fstab
+      - name: restart service
+        ansible.builtin.systemd:
+          daemon_reload: true
+          name: remote-fs.target
+          state: restarted
+      - name: check mount
+        shell:
+          chdir: /mnt
+          cmd: mount | grep mnt
+        register: output
+      - name: show mount
+        debug: msg={{ output.stdout_lines }}
