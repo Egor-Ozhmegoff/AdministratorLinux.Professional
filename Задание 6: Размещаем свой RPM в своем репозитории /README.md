@@ -1,5 +1,6 @@
 ### Задание 6: Размещаем свой RPM в своем репозитории 
 
+#### 1) Создать свой RPM пакет
 - Загружаем пакет nginx `wget https://nginx.org/packages/centos/8/SRPMS/nginx-1.20.2-1.el8.ngx.src.rpm`
 - Создаем дерево каталогов `rpm -i nginx-1.*`
 - Загружаем openssl `wget https://github.com/openssl/openssl/archive/refs/heads/OpenSSL_1_1_1-stable.tar.gz`
@@ -17,3 +18,10 @@
 - Проверяем работоспособность `systemctl start nginx && systemctl status nginx`
 
 <img width="1085" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/4f15966f-356c-4bf4-8cc3-28d2288e2fd3">
+
+#### 2) Создать свой репозиторий и разместить там ранее собранный RPM
+
+- Создаем папку `mkdir /usr/share/nginx/html/repo`
+- Копируем туда пакет `cp rpmbuild/RPMS/x86_64/nginx-1.20.2-1.el7.ngx.x86_64.rpm  /usr/share/nginx/html/repo/`
+- Копируем в наш репозиторий [Percona-server](wget https://downloads.percona.com/downloads/percona-distribution-mysql-ps/percona-distribution-mysql-ps-8.0.28/binary/redhat/8/x86_64/percona-orchestrator-3.2.6-2.el8.x86_64.rpm -O /usr/share/nginx/html/repo/percona- orchestrator-3.2.6-2.el8.x86_64.rpm)
+- Создаем репозиторий `createrepo /usr/share/nginx/html/repo/`
