@@ -29,4 +29,7 @@
 <img width="800" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/c9c7b360-38d0-4ead-becc-e53920a65f3e">
 
 - Добавляем в конфигурацию nginx `autoindex on;`
-- Перезапускаем сервис
+- Перезапускаем сервис `nginx -s reload`
+- Проверяем репозиторий `curl -a http://localhost/repo/`
+
+<img width="1131" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/0bc70ac9-2a6c-4734-ba92-286942e24cb4">
