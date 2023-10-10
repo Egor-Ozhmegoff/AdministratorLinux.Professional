@@ -32,4 +32,18 @@
 - Перезапускаем сервис `nginx -s reload`
 - Проверяем репозиторий `curl -a http://localhost/repo/`
 
-<img width="1131" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/0bc70ac9-2a6c-4734-ba92-286942e24cb4">
+<img width="1187" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/b4896fc7-14c2-4db7-a14c-7b200d775347">
+
+- Добавим наш репозиторий в yum 
+```
+cat >> /etc/yum.repos.d/otus.repo << EOF
+[otus]
+name=otus-linux
+baseurl=http://localhost/repo
+gpgcheck=0
+enabled=1
+EOF
+```
+
+
+
