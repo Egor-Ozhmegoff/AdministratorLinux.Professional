@@ -7,3 +7,6 @@
 - Установим зависимости `yum-builddep rpmbuild/SPECS/nginx.spec`
 - Добавляем строчку `--with-openssl=/root/openssl-OpenSSL_1_1_1-stable` в nginx.spec
 - Выполняем сборку пакета `rpmbuild -bb rpmbuild/SPECS/nginx.spec`
+<img width="800" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/99a8526d-d716-438f-ab68-e3693a12cd4a">
+- Проверяем что пакет собрался
+<img width="718" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/96ce3dc7-57b1-4d90-adff-ac2f79fb7b8d">
