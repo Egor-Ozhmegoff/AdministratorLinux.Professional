@@ -44,6 +44,9 @@ gpgcheck=0
 enabled=1
 EOF
 ```
+- Установим percona
+  
+<img width="1400" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/1cb5e73f-82b5-40f5-ace8-7e65891e4d65">
 
 
 
