@@ -15,4 +15,6 @@
 
 <img width="800" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/1c7af1a6-ff04-4260-8088-56d421c0b423">
 
+- Меняем пароль пользователя root
 
+<img width="660" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/44d904f1-79ac-48b3-a62e-0b368109b28b">
