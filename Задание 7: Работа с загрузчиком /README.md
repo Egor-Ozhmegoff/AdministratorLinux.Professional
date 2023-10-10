@@ -32,3 +32,7 @@
 - Правим /etc/fstab, /etc/default/grub, /boot/grub2/grub.cfg.
 - Пересоздаем init image `mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r)`
 - Перезагружаемся
+- Проверяем состояние системы
+
+<img width="400" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/078fe0f1-17e9-473b-8878-232c4d2da9bf">
+
