@@ -36,3 +36,16 @@
 
 <img width="400" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/078fe0f1-17e9-473b-8878-232c4d2da9bf">
 
+#### 3) Добавить модуль в initrd
+- Создаем папку и скрипты в ней
+
+<img width="500" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/fae86f29-0340-4c0b-a762-3c9e5e388b79">
+
+- Пересобираем initrd `dracut -f -v`
+- Проверяем модули `lsinitrd -m /boot/initramfs-$(uname -r).img | grep test`
+
+<img width="800" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/bef67792-596d-4b23-a784-b095b4f9a88a">
+
+- Заходим в grub.cfg и выключаем опции rghb и quiet
+- Перезагружаемся
+<img width="400" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/0451b00c-6e1a-4370-8a60-6068ae32696e">
