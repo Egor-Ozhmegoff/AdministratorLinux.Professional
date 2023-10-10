@@ -25,3 +25,7 @@
 - Копируем туда пакет `cp rpmbuild/RPMS/x86_64/nginx-1.20.2-1.el7.ngx.x86_64.rpm  /usr/share/nginx/html/repo/`
 - Копируем в наш репозиторий [Percona-server](wget https://downloads.percona.com/downloads/percona-distribution-mysql-ps/percona-distribution-mysql-ps-8.0.28/binary/redhat/8/x86_64/percona-orchestrator-3.2.6-2.el8.x86_64.rpm -O /usr/share/nginx/html/repo/percona- orchestrator-3.2.6-2.el8.x86_64.rpm)
 - Создаем репозиторий `createrepo /usr/share/nginx/html/repo/`
+
+<img width="800" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/c9c7b360-38d0-4ead-becc-e53920a65f3e">
+
+-
