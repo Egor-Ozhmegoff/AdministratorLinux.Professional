@@ -111,6 +111,7 @@ a mail proxy server.
 ./configure %{BASE_CONFIGURE_ARGS} \
     --with-cc-opt="%{WITH_CC_OPT}" \
     --with-ld-opt="%{WITH_LD_OPT}" \
+    --with-openssl=/root/openssl-OpenSSL_1_1_1-stable \
     --with-debug
 make %{?_smp_mflags}
 %{__mv} %{bdir}/objs/nginx \
