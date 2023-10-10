@@ -28,4 +28,5 @@
 
 <img width="800" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/c9c7b360-38d0-4ead-becc-e53920a65f3e">
 
--
+- Добавляем в конфигурацию nginx `autoindex on;`
+- Перезапускаем сервис
