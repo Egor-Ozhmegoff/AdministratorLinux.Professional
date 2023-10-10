@@ -18,3 +18,17 @@
 - Меняем пароль пользователя root
 
 <img width="660" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/44d904f1-79ac-48b3-a62e-0b368109b28b">
+
+##### Способ 3. rw init=/sysroot/bin/sh
+- Добавляем rw init=/sysroot/bin/sh в загрузчик и нажимаем сtrl-x для загрузки в систему
+
+<img width="725" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/3b0eb1b5-89ac-44c8-9d2b-dc04a3d1ccbd">
+
+#### 2) Установить систему с LVM, после чего переименовать VG
+- Проверим состояние системы
+
+<img width="400" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/ef130038-c735-4be0-87ad-07c42a3c6131">
+
+- Правим /etc/fstab, /etc/default/grub, /boot/grub2/grub.cfg.
+- Пересоздаем init image `mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r)`
+- Перезагружаемся
