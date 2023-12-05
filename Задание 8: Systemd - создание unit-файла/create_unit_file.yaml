@@ -1,0 +1,39 @@
+---
+  - name: create unit file
+    gather_facts: false
+    hosts: otus
+    become: true
+    become_method: sudo
+    tasks:
+      - name: Copy watchlog
+        copy:
+          src: watchlog
+          dest: /etc/default/watchlog
+      - name: Copy watchlog.log
+        copy:
+          src: watchlog.log
+          dest: /var/log/watchlog.log
+      - name: Copy watchlog
+        copy:
+          src: watchlog.sh
+          dest: /opt/watchlog.sh
+      - name: add permissions
+        shell: chmod +x /opt/watchlog.sh
+      - name: Copy watchlog.service
+        copy:
+          src: watchlog.service
+          dest: /etc/systemd/system/watchlog.service
+      - name: Copy watchlog.timer
+        copy:
+          src: watchlog.timer
+          dest: /etc/systemd/system/watchlog.timer
+      - name: start service
+        systemd:
+          daemon_reload: true
+          name: watchlog.timer
+          state: started
+      - name: Check service
+        shell: cat /var/log/messages
+        register: output
+      - name: Show service
+        debug: msg={{ output.stdout_lines }}
