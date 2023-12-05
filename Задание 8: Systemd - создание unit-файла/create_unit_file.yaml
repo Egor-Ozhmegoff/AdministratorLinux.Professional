@@ -33,7 +33,7 @@
           name: watchlog.timer
           state: started
       - name: Check service
-        shell: cat /var/log/messages
+        shell: grep -i master /var/log/syslog
         register: output
       - name: Show service
         debug: msg={{ output.stdout_lines }}

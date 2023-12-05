@@ -1,0 +1,15 @@
+---
+  - name: create unit file
+    gather_facts: false
+    hosts: otus
+    become: true
+    become_method: sudo
+    tasks:
+      - name: Install spawn-fcgi
+        apt:
+          name:
+            - spawn-fcgi
+            - php
+            - php-cli
+            - libapache2-mod-fcgid
+            - apache2
