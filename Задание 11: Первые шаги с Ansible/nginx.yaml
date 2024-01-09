@@ -1,0 +1,41 @@
+---
+  - name: Install and configure NGINX
+    gather_facts: false
+    hosts: otus
+    become: true
+    become_method: sudo
+    vars:
+      nginx_listen_port: 8080
+    handlers:
+      - name: restart nginx
+        systemd:
+          name: nginx
+          state: restarted
+          enabled: yes
+      - name: reload nginx
+        systemd:
+          name: nginx
+          state: reloaded
+    tasks:
+      - name: Install NGINX
+        apt:
+          name:
+            - nginx
+        notify:
+          - restart nginx
+        tags:
+          - nginx-package
+          - packages
+      - name: Create NGINX config file from template
+        template:
+        src: templates/nginx.conf.j2
+        dest: /tmp/nginx.conf
+        notify:
+          - reload nginx
+        tags:
+          - nginx-configuration
+      - name: Check NGINX
+        shell:
+          cmd: curl http://10.64.244.5:8080
+        delegate_to: 127.0.0.1
+        run_once: true
