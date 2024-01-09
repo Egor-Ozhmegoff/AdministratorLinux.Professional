@@ -16,4 +16,5 @@
 <img width="963" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/eb59d72c-3504-4e0b-9b52-c90400148a20">
 
 Проверяем доступность сервиса:
+
 <img width="650" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/8a608b0c-3021-425b-a850-5f63bc46227a">
