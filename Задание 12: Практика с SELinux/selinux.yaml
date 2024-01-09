@@ -1,0 +1,20 @@
+---
+  - name: Install and configure SELinux
+    gather_facts: false
+    hosts: otus
+    become: true
+    become_method: sudo
+    handlers:
+      - name: reboot
+        reboot:
+    tasks:
+      - name: Install SELinux
+        apt:
+          name:
+            - policycoreutils
+            - selinux-utils
+            - selinux-basics
+      - name: Enable SELinux
+        shell: sed -i -E "s/SELINUX=.+/SELINUX=enforcing/" /etc/selinux/config &&selinux-activate
+        notify:
+          - reboot
