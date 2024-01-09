@@ -11,4 +11,5 @@
 <img width="988" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/b408633d-731d-41a4-86c6-48af0e973c49">
 
 Образ нахрдтся в dockerhub по ссылке:
+
 https://hub.docker.com/r/banezz/task13/tags
