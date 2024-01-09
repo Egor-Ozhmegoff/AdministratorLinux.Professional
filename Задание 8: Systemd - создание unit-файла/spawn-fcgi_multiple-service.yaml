@@ -1,0 +1,36 @@
+---
+  - name: create unit file
+    gather_facts: false
+    hosts: otus
+    become: true
+    become_method: sudo
+    tasks:
+      - name: Copy httpd.service
+        copy:
+          src: httpd.service
+          dest: /etc/systemd/system/httpd.service
+      - name: Copy httpd-first
+        copy:
+          src: httpd-first
+          dest: /etc/default/httpd-first
+      - name: Copy httpd-second
+        copy:
+          src: httpd-first
+          dest: /etc/default/httpd-second
+      - name: Copy first.conf
+        copy:
+          src: first.conf
+          dest: /opt/first.conf
+      - name: Copy second.conf
+        copy:
+          src: second.conf
+          dest: /opt/second.conf
+      - name: start httpd@first
+        systemd:
+          daemon_reload: true
+          name: httpd@first
+          state: started
+      - name: start httpd@second
+        systemd:
+          name: httpd@second
+          state: started

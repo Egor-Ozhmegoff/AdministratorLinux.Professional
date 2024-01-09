@@ -5,4 +5,4 @@
 #
 # Example :
 SOCKET=/var/run/php-fcgi.sock
-OPTIONS="-s $SOCKET -S -M 0600 -C 32 -F 1 -- /usr/bin/php-cgi"
+OPTIONS="-f /opt/second.conf -s $SOCKET -S -M 0600 -C 32 -F 1 -- /usr/bin/php-cgi"
