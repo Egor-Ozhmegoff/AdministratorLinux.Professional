@@ -13,3 +13,5 @@
 - Скопирует необходимые файлы 
 - Запустит spawn-fcgi.service
 - Проверит работоспособность сервиса
+
+<img width="925" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/6a773fde-33bb-4fc7-851d-6dace332f0ba">
