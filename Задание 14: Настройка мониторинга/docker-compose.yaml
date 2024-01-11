@@ -22,13 +22,13 @@ services:
 
   alertmanager:
     image: prom/alertmanager
-    ports:
-      - 9093:9093
     volumes:
       - ./alertmanager/:/etc/alertmanager/
     command:
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
+    ports:
+      - 9093:9093
 
   node-exporter:
     image: quay.io/prometheus/node-exporter:latest
@@ -53,9 +53,9 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - grafana_data:/var/lib/grafana
       - ./grafana/provisioning/:/etc/grafana/provisioning/
       - ./grafana/dashboards/:/var/lib/grafana/dashboards/
+      - grafana_data:/var/lib/grafana
     environment:
       - GF_INSTALL_PLUGINS=vonage-status-panel
     env_file:
