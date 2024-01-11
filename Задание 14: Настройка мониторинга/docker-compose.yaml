@@ -8,8 +8,8 @@ services:
   prometheus:
     image: prom/prometheus:latest
     volumes:
-      - ./prometheus/:/etc/prometheus/:ro
-      - prometheus_data:/prometheus:ro
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -17,6 +17,9 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
     ports:
       - 9090:9090
+    links:
+      - alertmanager:alertmanager
+
   alertmanager:
     image: prom/alertmanager
     ports:
@@ -26,6 +29,7 @@ services:
     command:
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
+
   node-exporter:
     image: quay.io/prometheus/node-exporter:latest
     volumes:
@@ -44,15 +48,16 @@ services:
     restart: always
     deploy:
       mode: global
+
   grafana:
     image: grafana/grafana
     user: "472"
     ports:
       - 3000:3000
     volumes:
-      - grafana_data:/var/lib/grafana:rw
-      - ./grafana/provisioning/:/etc/grafana/provisioning/:ro
-      - ./grafana/dashboards/:/var/lib/grafana/dashboards/:ro
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+      - ./grafana/dashboards/:/var/lib/grafana/dashboards/
     environment:
       - GF_INSTALL_PLUGINS=vonage-status-panel
     env_file:
