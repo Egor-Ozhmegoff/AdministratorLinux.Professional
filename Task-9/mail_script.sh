@@ -1,7 +1,10 @@
 #!/bin/bash
 EMAIL_ADDRESS=$1
+PROCESS_COUNT=$(pidof -x "mail_script.sh" | awk '{ print NF }')
+echo "$PROCESS_COUNT"
 
-if pidof -x "mail_script.sh" >/dev/null; then
+if  [ "$PROCESS_COUNT" != "1" ]
+then
     echo "Process already running"
     exit 1
 fi
