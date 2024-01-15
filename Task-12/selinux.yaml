@@ -1,7 +1,7 @@
 ---
   - name: Install and configure SELinux
     gather_facts: false
-    hosts: otus
+    hosts: otus_centos
     become: true
     become_method: sudo
     handlers:
