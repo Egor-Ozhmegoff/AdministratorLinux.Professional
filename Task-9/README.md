@@ -1,7 +1,7 @@
 ### Задание 9: Пишем скрипт
 Добавим скрипт в cron 
 ```
-0 * * * * sudo /home/eozhmegov/AdministratorLinux.Professional/Task-9/mail_script.sh
+0 * * * * sudo /home/eozhmegov/AdministratorLinux.Professional/Task-9/mail_script.sh banezmesm@gmail.com
 ```
 Разрешим выподнять скрипт
 ```
