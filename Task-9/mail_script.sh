@@ -1,7 +1,6 @@
 #!/bin/bash
 EMAIL_ADDRESS=$1
-PROCESS_COUNT=$(ps -afx | grep 'mail_script.sh')
-echo "$PROCESS_COUNT"
+PROCESS_COUNT="$(ps -afx | grep 'mail_script.sh')"
 
 if  [ "$PROCESS_COUNT" != "1" ]
 then
