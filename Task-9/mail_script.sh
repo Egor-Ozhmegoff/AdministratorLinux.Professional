@@ -4,6 +4,7 @@ PROCESS_COUNT="$(ps -afx | grep 'mail_script.sh')"
 
 if  [ "$PROCESS_COUNT" != "1" ]
 then
+    echo "$PROCESS_COUNT"
     echo "Process already running"
     exit 1
 fi
