@@ -1,7 +1,6 @@
 #!/bin/bash
 EMAIL_ADDRESS=$1
-PROCESS_COUNT=$(pidof -x "mail_script.sh" | awk '{ print NF }')
-echo "$(pidof -x "mail_script.sh")"
+PROCESS_COUNT=$(pidof -x "mail_script.sh" | awk '{ print NF $0}')
 echo "$PROCESS_COUNT"
 
 if  [ "$PROCESS_COUNT" != "1" ]
