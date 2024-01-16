@@ -4,4 +4,5 @@ servers:
       ansible_host: 10.64.244.5
     otus2:
       ansible_host: 10.64.244.6
-    otus_centos: 10.64.244.7
+    otus_centos:
+      ansible_host: 10.64.244.7

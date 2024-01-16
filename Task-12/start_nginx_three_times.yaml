@@ -1,0 +1,23 @@
+---
+  - name: Install and configure SELinux
+    gather_facts: false
+    hosts: otus_centos
+    become: true
+    become_method: sudo
+    tasks:
+      - name: Stop firewalld
+        systemd_service:
+          name: firewalld
+          state: stopped
+
+      - name: Get Firewalld Status
+        systemd:
+          name: "firewalld"
+        register: firewalld
+      - debug:
+          var: firewalld.status.ActiveState
+
+      - name: Check Selinux
+        shell: getenforce
+        register: output
+      - debug: msg="{{ output }}"

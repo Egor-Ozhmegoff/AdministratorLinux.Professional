@@ -8,13 +8,27 @@
       - name: reboot
         reboot:
     tasks:
-      - name: Install SELinux
-        apt:
+      - name: Install epel-release
+        yum:
           name:
-            - policycoreutils
-            - selinux-utils
-            - selinux-basics
+            - epel-release
+      - name: Install packages
+        yum:
+          name:
+            - nginx
+            - policycoreutils-python
+            - policycoreutils-newrole
+            - setools-console
+            - selinux-policy-mls
+            - setroubleshoot-server
+          state: present
+      - name: Change nginx port
+        shell: sed -ie 's/:80/:4881/g' /etc/nginx/nginx.conf && sed -i 's/listen       80;/listen       4881;/' /etc/nginx/nginx.conf
+      - name: start nginx
+        systemd_service:
+          name: nginx
+          state: started
       - name: Enable SELinux
-        shell: sed -i -E "s/SELINUX=.+/SELINUX=enforcing/" /etc/selinux/config &&selinux-activate
+        shell: sed -i -E "s/SELINUX=.+/SELINUX=enforcing/" /etc/selinux/config && selinuxenabled
         notify:
           - reboot
