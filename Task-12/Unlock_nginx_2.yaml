@@ -1,0 +1,39 @@
+---
+  - name: unlock nginx 2
+    gather_facts: false
+    hosts: otus_centos
+    become: true
+    become_method: sudo
+    tasks:
+      - name: check ports
+        shell: semanage port -l | grep http
+        register: output
+      - debug: msg="{{ output }}"
+
+      - name: unlock nginx port
+        shell: semanage port -a -t http_port_t -p tcp 4881
+
+      - name: check new port
+        shell: semanage port -l | grep  http_port_t
+        register: output
+      - debug: msg="{{ output }}"
+
+      - name: restart nginx
+        systemd_service:
+          name: nginx
+          state: restarted
+
+      - name: Get nginx Status
+        systemd:
+          name: "nginx"
+        register: nginx
+      - debug:
+          var: nginx.status.ActiveState
+
+      - name: block nginx
+        shell: semanage port -d -t http_port_t -p tcp 4881
+
+      - name: check deleted port
+        shell: semanage port -l | grep  http_port_t
+        register: output
+      - debug: msg="{{ output }}"
