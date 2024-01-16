@@ -1,5 +1,5 @@
 ---
-  - name: Install and configure SELinux
+  - name: Check SELinux
     gather_facts: false
     hosts: otus_centos
     become: true
@@ -20,4 +20,10 @@
       - name: Check Selinux
         shell: getenforce
         register: output
+      - debug: msg="{{ output }}"
+
+      - name: check log
+        shell: grep nginx /var/log/audit/audit.log | audit2why
+        register: output
+
       - debug: msg="{{ output }}"

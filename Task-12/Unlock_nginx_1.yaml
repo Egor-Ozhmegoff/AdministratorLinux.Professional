@@ -1,0 +1,24 @@
+---
+  - name: unlock nginx 1
+    gather_facts: false
+    hosts: otus_centos
+    become: true
+    become_method: sudo
+    tasks:
+    - name: unlock nginx
+      shell: setsebool -P nis_enabled 1
+
+    - name: restart nginx
+      systemd_service:
+        name: nginx
+        state: restarted
+
+    - name: Get nginx Status
+      systemd:
+        name: "nginx"
+      register: nginx
+    - debug:
+        var: nginx.status.ActiveState
+
+    - name: block nginx
+      shell: setsebool -P nis_enabled off

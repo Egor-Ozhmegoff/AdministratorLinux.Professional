@@ -1,5 +1,5 @@
 ---
-  - name: Install and configure SELinux
+  - name: SELinux
     gather_facts: false
     hosts: otus_centos
     become: true
