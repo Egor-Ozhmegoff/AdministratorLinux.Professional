@@ -42,4 +42,16 @@ setsebool -P nis_enabled 1
 
 <img width="1512" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/366b71e2-0c76-471f-91ae-2d8448fc1cc6">
 
+Запустим плейбуку Unlock_nginx_3:
+- Проверит статус nginx
+- Сформирует модуль nginx
+- Установит модуль
+- Перезапустит nginx
+- Проверит состояние nginx
+- Посмотрит какие модули установлены
+- Удалит модуль nginx
+
+<img width="661" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/fd7365dc-8c44-420a-acf7-73128beb39a3">
+<img width="1512" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/e3bd8947-4bcd-4423-bdfe-b8806f5d6c0d">
+
 
