@@ -20,3 +20,9 @@
 ```
 setsebool -P nis_enabled 1
 ```
+Запустим плейбуку Unlock_nginx_1.yaml она:
+- Разблокирует nginx
+- Проверит состяние сервиса
+- Заблокирует nginx
+
+<img width="937" alt="image" src="https://github.com/Egor-Ozhmegoff/AdministratorLinux.Professional/assets/71369321/6d809d62-2911-43c0-b190-5a7ebac971de">
