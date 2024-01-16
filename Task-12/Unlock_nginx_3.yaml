@@ -1,0 +1,39 @@
+---
+  - name: unlock nginx 3
+    gather_facts: false
+    hosts: otus_centos
+    become: true
+    become_method: sudo
+    tasks:
+      - name: Get nginx Status
+        systemd:
+          name: "nginx"
+        register: nginx
+      - debug:
+          var: nginx.status.ActiveState
+
+      - name: run audit2allow
+        shell: grep nginx /var/log/audit/audit.log | audit2allow -M nginx
+
+      - name: set module
+        shell: semodule -i nginx.pp
+
+      - name: restart nginx
+        systemd_service:
+          name: nginx
+          state: restarted
+
+      - name: Get nginx Status
+        systemd:
+          name: "nginx"
+        register: nginx
+      - debug:
+          var: nginx.status.ActiveState
+
+      - name: show modules
+        shell: semodule -l
+        register: output
+      - debug: msg="{{ output }}"
+
+      - name: delete module
+        shell: semodule -r nginx
